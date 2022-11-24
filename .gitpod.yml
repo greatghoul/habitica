@@ -9,16 +9,19 @@ image:
 tasks:
 
   - name: Mongo
+    init: gp sync-await npm:install
     command: npm run mongo:dev
 
   - name: Server
     before: cp -n config.json.example config.json
-    init: npm ci
+    init: |
+      npm install
+      gp sync-done npm:install
     command: npm start
 
   - name: Client
     before: cd website/client
-    init: npm ci
+    init: npm install
     command: npm run serve
 
   - name: Terminal
