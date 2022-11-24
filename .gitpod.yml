@@ -8,15 +8,14 @@ tasks:
   - name: Setup & Build
     init: |
       cp -n config.json.example config.json
-      npm install -g gulp-cli mocha
-      npm install
+      npm i -g gulp-cli mocha
+      npm ci
       npm run postinstall
   - name: Services
-    init: docker-compose -f .gitpod/docker-compoose.yml pull
-    command: docker-compose -f .gitpod/docker-compoose.yml up
+    init: docker-compose -f .gitpod/docker-compose.yml pull
+    command: docker-compose -f .gitpod/docker-compose.yml up
   - name: Terminal
- 
- 
+
 ports:
   - port: 27017
     name: Mongodb
