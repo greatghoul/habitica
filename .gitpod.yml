@@ -5,16 +5,32 @@
 image:
   file: .gitpod/Dockerfile
 
+
 tasks:
-  - name: Setup & Build
-    init: |
-      cp -n config.json.example config.json
-      npm ci
-  - name: Services
-    init: docker-compose -f .gitpod/docker-compose.yml pull
-    command: docker-compose -f .gitpod/docker-compose.yml up
+
+  - name: Mongo
+    command: npm run mongo:dev
+
+  - name: Server
+    before: cp -n config.json.example config.json
+    init: npm ci
+    command: npm start
+
+  - name: Client
+    before: cd website/client
+    init: npm ci
+    command: npm run serve
+
   - name: Terminal
 
+
 ports:
+
   - port: 27017
     name: Mongodb
+
+  - port: 3000
+    name: Habitica Server
+
+  - port: 8080
+    name: Habitica Client
